@@ -1,0 +1,671 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="robots" content="noodp" />
+    <title class="pjax-title">Second_post - 我的全新 Hugo 网站</title><meta name="Description" content="这是我的全新 Hugo 网站"><meta property="og:title" content="Second_post" />
+<meta property="og:description" content="hadoop完全分布式部署 编号 hostname IP 1 master 192.168.18.128 2 slave1 192.168.18.129 3 slave2 192.168.18.130 Linux环境设置 设置主机名 1 hostnamectl set-hostname [主机名] 绑定主机名与IP地址 编辑/etc/hosts" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="http://1139899175.github.io/second_post/" /><meta property="og:image" content="http://1139899175.github.io/logo.png"/><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2022-06-12T23:34:58+08:00" />
+<meta property="article:modified_time" content="2022-06-12T23:34:58+08:00" /><meta property="og:site_name" content="我的全新 Hugo 网站" />
+
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:image" content="http://1139899175.github.io/logo.png"/>
+
+<meta name="twitter:title" content="Second_post"/>
+<meta name="twitter:description" content="hadoop完全分布式部署 编号 hostname IP 1 master 192.168.18.128 2 slave1 192.168.18.129 3 slave2 192.168.18.130 Linux环境设置 设置主机名 1 hostnamectl set-hostname [主机名] 绑定主机名与IP地址 编辑/etc/hosts"/>
+<meta name="application-name" content="DoIt">
+<meta name="apple-mobile-web-app-title" content="DoIt">
+
+<meta name="theme-color" content="#f8f8f8"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="canonical" href="http://1139899175.github.io/second_post/" /><link rel="prev" href="http://1139899175.github.io/first_post/" /><link rel="stylesheet" href="/lib/normalize/normalize.min.css"><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" as="style" onload="this.onload=null;this.rel='stylesheet'" href="/lib/fontawesome-free/all.min.css">
+    <noscript><link rel="stylesheet" href="/lib/fontawesome-free/all.min.css"></noscript><link rel="preload" as="style" onload="this.onload=null;this.rel='stylesheet'" href="/lib/animate/animate.min.css">
+    <noscript><link rel="stylesheet" href="/lib/animate/animate.min.css"></noscript><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "Second_post",
+        "inLanguage": "zh-CN",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "http:\/\/1139899175.github.io\/second_post\/"
+        },"genre": "posts","wordcount":  725 ,
+        "url": "http:\/\/1139899175.github.io\/second_post\/","datePublished": "2022-06-12T23:34:58+08:00","dateModified": "2022-06-12T23:34:58+08:00","publisher": {
+            "@type": "Organization",
+            "name": ""},"author": {
+                "@type": "Person",
+                "name": "HDK"
+            },"description": ""
+    }
+    </script></head>
+
+<body header-desktop="fixed" header-mobile="auto"><script type="text/javascript">
+        function setTheme(theme) {document.body.setAttribute('theme', theme);}
+        function saveTheme(theme) {window.localStorage && localStorage.setItem('theme', theme);}
+        function getMeta(metaName) {const metas = document.getElementsByTagName('meta'); for (let i = 0; i < metas.length; i++) if (metas[i].getAttribute('name') === metaName) return metas[i]; return '';}
+        if (window.localStorage && localStorage.getItem('theme')) {let theme = localStorage.getItem('theme');theme === 'light' || theme === 'dark' || theme === 'black' ? setTheme(theme) : (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? setTheme('dark') : setTheme('light')); } else { if ('auto' === 'light' || 'auto' === 'dark' || 'auto' === 'black') setTheme('auto'), saveTheme('auto'); else saveTheme('auto'), window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? setTheme('dark') : setTheme('light');}
+        let metaColors = {'light': '#f8f8f8','dark': '#252627','black': '#000000'}
+        getMeta('theme-color').content = metaColors[document.body.getAttribute('theme')];
+    </script>
+    <div id="back-to-top"></div>
+    <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/" title="我的全新 Hugo 网站">我的全新 Hugo 网站</a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a class="menu-item" href="/posts/"> 文章 </a><a class="menu-item" href="/tags/"> 标签 </a><a class="menu-item" href="/categories/"> 分类 </a><span class="menu-item delimiter"></span><span class="menu-item search" id="search-desktop">
+                        <input type="text" placeholder="搜索文章标题或内容..." id="search-input-desktop">
+                        <a href="#" onclick="return false;" class="search-button search-toggle" id="search-toggle-desktop" title="搜索">
+                            <i class="fas fa-search fa-fw"></i>
+                        </a>
+                        <a href="#" onclick="return false;" class="search-button search-clear" id="search-clear-desktop" title="清空">
+                            <i class="fas fa-times-circle fa-fw"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-desktop">
+                            <i class="fas fa-spinner fa-fw fa-spin"></i>
+                        </span>
+                    </span><a href="#" onclick="return false;" class="menu-item theme-select" title="切换主题">
+                    <i class="fas fa-adjust fa-fw"></i>
+                    <select class="color-theme-select" id="theme-select-desktop" title="切换主题">
+                        <option value="light">浅色</option>
+                        <option value="dark">深色</option>
+                        <option value="black">黑色</option>
+                        <option value="auto">跟随系统</option>
+                    </select>
+                </a></div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/" title="我的全新 Hugo 网站">我的全新 Hugo 网站</a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><div class="search-wrapper">
+                    <div class="search mobile" id="search-mobile">
+                        <input type="text" placeholder="搜索文章标题或内容..." id="search-input-mobile">
+                        <a href="#" onclick="return false;" class="search-button search-toggle" id="search-toggle-mobile" title="搜索">
+                            <i class="fas fa-search fa-fw"></i>
+                        </a>
+                        <a href="#" onclick="return false;" class="search-button search-clear" id="search-clear-mobile" title="清空">
+                            <i class="fas fa-times-circle fa-fw"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-mobile">
+                            <i class="fas fa-spinner fa-fw fa-spin"></i>
+                        </span>
+                    </div>
+                    <a href="#" onclick="return false;" class="search-cancel" id="search-cancel-mobile">
+                        取消
+                    </a>
+                </div><a class="menu-item" href="/posts/" title="">文章</a><a class="menu-item" href="/tags/" title="">标签</a><a class="menu-item" href="/categories/" title="">分类</a><a href="#" onclick="return false;" class="menu-item theme-select" title="切换主题">
+                <i class="fas fa-adjust fa-fw"></i>
+                <select class="color-theme-select" id="theme-select-mobile" title="切换主题">
+                    <option value="light">浅色</option>
+                    <option value="dark">深色</option>
+                    <option value="black">黑色</option>
+                    <option value="auto">跟随系统</option>
+                </select>
+            </a></div>
+    </div>
+</header>
+<div class="search-dropdown desktop">
+    <div id="search-dropdown-desktop"></div>
+</div>
+<div class="search-dropdown mobile">
+    <div id="search-dropdown-mobile"></div>
+</div>
+<main class="main">
+            <div class="container"><div class="toc" id="toc-auto">
+        <h2 class="toc-title">目录</h2>
+        <div class="toc-content" id="toc-content-auto"></div>
+    </div><script>document.getElementsByTagName("main")[0].setAttribute("pageStyle", "normal")</script><script>document.getElementsByTagName("main")[0].setAttribute("autoTOC", "false")</script><article class="page single"><h1 class="single-title animate__animated animate__flipInX">Second_post</h1><div class="post-meta">
+            <div class="post-meta-line">
+                <span class="post-author"><i class="author fas fa-user-circle fa-fw"></i><a href="/" title="Author" rel=" author" class="author">HDK</a>
+                </span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2022-06-12">2022-06-12</time>&nbsp;<i class="far fa-edit fa-fw"></i>&nbsp;<time datetime="2022-06-12">2022-06-12</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 725 字&nbsp;
+                <i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 2 分钟&nbsp;</div>
+        </div><div class="details toc" id="toc-static"  kept="true">
+                <div class="details-summary toc-title">
+                    <span>目录</span>
+                    <span><i class="details-icon fas fa-angle-right"></i></span>
+                </div>
+                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#linux环境设置">Linux环境设置</a></li>
+    <li><a href="#java安装">Java安装</a></li>
+    <li><a href="#hadoop安装">hadoop安装</a></li>
+  </ul>
+
+  <ul>
+    <li><a href="#zookeeper">zookeeper</a></li>
+  </ul>
+</nav></div>
+            </div><div class="content" id="content"><h1 id="hadoop完全分布式部署">hadoop完全分布式部署</h1>
+<table>
+<thead>
+<tr>
+<th>编号</th>
+<th>hostname</th>
+<th>IP</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>master</td>
+<td>192.168.18.128</td>
+</tr>
+<tr>
+<td>2</td>
+<td>slave1</td>
+<td>192.168.18.129</td>
+</tr>
+<tr>
+<td>3</td>
+<td>slave2</td>
+<td>192.168.18.130</td>
+</tr>
+</tbody>
+</table>
+<h2 id="linux环境设置">Linux环境设置</h2>
+<ol>
+<li>
+<p>设置主机名</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">hostnamectl set-hostname <span class="o">[</span>主机名<span class="o">]</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div></li>
+<li>
+<p>绑定主机名与IP地址</p>
+<ul>
+<li>编辑/etc/hosts</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">vim /etc/hosts
+</span></span></code></pre></td></tr></table>
+</div>
+</div></li>
+<li>
+<p>关闭防火墙</p>
+<ul>
+<li>
+<p>关闭防火墙</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">systemctl stop firewall
+</span></span></code></pre></td></tr></table>
+</div>
+</div></li>
+<li>
+<p>停用防火墙</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">systemctl disable firewall
+</span></span></code></pre></td></tr></table>
+</div>
+</div></li>
+</ul>
+</li>
+<li>
+<p><strong>SSH免密登录</strong></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">ssh-keygen
+</span></span><span class="line"><span class="cl">ssh-copy-id
+</span></span></code></pre></td></tr></table>
+</div>
+</div></li>
+</ol>
+<h2 id="java安装">Java安装</h2>
+<ol>
+<li>
+<p>卸载系统openjdk</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">rpm -qa <span class="p">|</span> greap jave
+</span></span><span class="line"><span class="cl">rpm -e --nodeps java.....
+</span></span></code></pre></td></tr></table>
+</div>
+</div></li>
+<li>
+<p>解压jdk安装包</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">tar -zxvf /opt/softawre/jdk..... -C /usr/local/src
+</span></span><span class="line"><span class="cl">ll /usr/local/src
+</span></span></code></pre></td></tr></table>
+</div>
+</div></li>
+<li>
+<p>配置环境变量</p>
+<ul>
+<li>
+<p>修改全局环境变量</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">vi /etc/profile
+</span></span><span class="line"><span class="cl">最后两行加入：export <span class="nv">JAVA_HOME</span><span class="o">=</span>/usr/local/src/jdk
+</span></span><span class="line"><span class="cl">          :export <span class="nv">PATH</span><span class="o">=</span><span class="nv">$PATH</span>:<span class="nv">$JAVA_HOME</span>/bin
+</span></span><span class="line"><span class="cl">保存退出
+</span></span><span class="line"><span class="cl"><span class="nb">source</span> /etc/profile
+</span></span><span class="line"><span class="cl"><span class="nb">echo</span> <span class="nv">$JAVA_HOME</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div></li>
+<li>
+<p>修改用户环境变量</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">vim /home/hadoop/.bashrc
+</span></span><span class="line"><span class="cl">最后两行两行加入：export <span class="nv">JAVA_HOME</span><span class="o">=</span>/usr/local/src/jdk
+</span></span><span class="line"><span class="cl">             :export <span class="nv">PATH</span><span class="o">=</span><span class="nv">$PATH</span>:<span class="nv">$JAVA_HOME</span>/bin
+</span></span><span class="line"><span class="cl">保存退出
+</span></span><span class="line"><span class="cl"><span class="nb">source</span> /home/hadoop/.bashrc
+</span></span><span class="line"><span class="cl"><span class="nb">echo</span> <span class="nv">$JAVA_HOME</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div></li>
+</ul>
+</li>
+</ol>
+<h2 id="hadoop安装">hadoop安装</h2>
+<ol>
+<li>
+<p>解压安装包</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">tar -zxvf ~/hadoop..... -C /usr/local/src
+</span></span><span class="line"><span class="cl">改名:mv /usr/local/src/hadoop-2.7.1.tar.gz/ /usr/local/src/hadoop
+</span></span></code></pre></td></tr></table>
+</div>
+</div></li>
+<li>
+<p>配置环境变量</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">vi /etc/profile
+</span></span><span class="line"><span class="cl">最后加入：export HADOOP_HOME=/usr/local/src/hadoop
+</span></span><span class="line"><span class="cl">       :export 	PATH=$PATH:$HADOOP_HOME/bin:$HADOOP_HOME/sbin
+</span></span></code></pre></td></tr></table>
+</div>
+</div></li>
+<li>
+<p>修改目录所有者</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">chown -R hadoop:hadoop /usr/local/src
+</span></span><span class="line"><span class="cl">检查用户所有者是否为hadoop：；ll /usr/local/src
+</span></span></code></pre></td></tr></table>
+</div>
+</div></li>
+<li>
+<p>配置hadoop文件</p>
+<ul>
+<li>
+<p>修改hadoop-env.sh</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">cd /usr/local/src/hadoop/etc/hadoop/
+</span></span><span class="line"><span class="cl">vim hadoop-env.sh
+</span></span><span class="line"><span class="cl">exoprt JAVA_HOME=/usr/local/src/java
+</span></span></code></pre></td></tr></table>
+</div>
+</div></li>
+<li>
+<p>hdfs-site.xml</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">&lt;configuration&gt;
+</span></span><span class="line"><span class="cl"> 	&lt;property&gt;
+</span></span><span class="line"><span class="cl"> 		&lt;name&gt;dfs.namenode.name.dir&lt;/name&gt;
+</span></span><span class="line"><span class="cl"> 		&lt;value&gt;file:/usr/local/src/hadoop/dfs/name&lt;/value&gt;
+</span></span><span class="line"><span class="cl"> 	&lt;/property&gt;
+</span></span><span class="line"><span class="cl"> 	&lt;property&gt;
+</span></span><span class="line"><span class="cl"> 		&lt;name&gt;dfs.datanode.data.dir&lt;/name&gt;
+</span></span><span class="line"><span class="cl"> 		&lt;value&gt;file:/usr/local/src/hadoop/dfs/data&lt;/value&gt;
+</span></span><span class="line"><span class="cl"> 	&lt;/property&gt;
+</span></span><span class="line"><span class="cl"> 	&lt;property&gt;
+</span></span><span class="line"><span class="cl"> 		&lt;name&gt;dfs.replication&lt;/name&gt; 
+</span></span><span class="line"><span class="cl">		&lt;value&gt;3&lt;/value&gt; 
+</span></span><span class="line"><span class="cl"> 	&lt;/property&gt;
+</span></span><span class="line"><span class="cl">&lt;/configuration&gt;
+</span></span></code></pre></td></tr></table>
+</div>
+</div></li>
+<li>
+<p>yarn-site.xml</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">&lt;configuration&gt;
+</span></span><span class="line"><span class="cl"> 	&lt;property&gt;
+</span></span><span class="line"><span class="cl"> 		&lt;name&gt;yarn.resourcemanager.address&lt;/name&gt;
+</span></span><span class="line"><span class="cl"> 		&lt;value&gt;master:8032&lt;/value&gt;
+</span></span><span class="line"><span class="cl"> 	&lt;/property&gt;
+</span></span><span class="line"><span class="cl"> 	&lt;property&gt;
+</span></span><span class="line"><span class="cl"> 		&lt;name&gt;yarn.resourcemanager.scheduler.address&lt;/name&gt;
+</span></span><span class="line"><span class="cl"> 		&lt;value&gt;master:8030&lt;/value&gt;
+</span></span><span class="line"><span class="cl"> 	&lt;/property&gt;
+</span></span><span class="line"><span class="cl"> 	&lt;property&gt;
+</span></span><span class="line"><span class="cl"> 		&lt;name&gt;yarn.resourcemanager.resource-tracker.address&lt;/name&gt;
+</span></span><span class="line"><span class="cl"> 		&lt;value&gt;master:8031&lt;/value&gt;
+</span></span><span class="line"><span class="cl"> 	&lt;/property&gt;
+</span></span><span class="line"><span class="cl"> 	&lt;property&gt;
+</span></span><span class="line"><span class="cl"> 		&lt;name&gt;yarn.resourcemanager.admin.address&lt;/name&gt;
+</span></span><span class="line"><span class="cl"> 		&lt;value&gt;master:8033&lt;/value&gt;
+</span></span><span class="line"><span class="cl"> 	&lt;/property&gt;
+</span></span><span class="line"><span class="cl"> 	&lt;property&gt;
+</span></span><span class="line"><span class="cl"> 		&lt;name&gt;yarn.resourcemanager.webapp.address&lt;/name&gt;
+</span></span><span class="line"><span class="cl"> 		&lt;value&gt;master:8088&lt;/value&gt;
+</span></span><span class="line"><span class="cl"> 	&lt;/property&gt;
+</span></span><span class="line"><span class="cl"> 	&lt;property&gt;
+</span></span><span class="line"><span class="cl"> 		&lt;name&gt;yarn.nodemanager.aux-services&lt;/name&gt;
+</span></span><span class="line"><span class="cl"> 		&lt;value&gt;mapreduce_shuffle&lt;/value&gt;
+</span></span><span class="line"><span class="cl"> 	&lt;/property&gt;
+</span></span><span class="line"><span class="cl"> 	&lt;property&gt;
+</span></span><span class="line"><span class="cl"> 		&lt;name&gt;yarn.nodemanager.auxservices.mapreduce.shuffle.class&lt;/name&gt;
+</span></span><span class="line"><span class="cl"> 		&lt;value&gt;org.apache.hadoop.mapred.ShuffleHandler&lt;/value&gt;
+</span></span><span class="line"><span class="cl"> 	&lt;/property&gt;
+</span></span><span class="line"><span class="cl">&lt;/configuration&gt;
+</span></span></code></pre></td></tr></table>
+</div>
+</div></li>
+<li>
+<p>mapred-site.xml</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">&lt;configuration&gt;
+</span></span><span class="line"><span class="cl"> 	&lt;property&gt;
+</span></span><span class="line"><span class="cl"> 		&lt;name&gt;mapreduce.framework.name&lt;/name&gt;
+</span></span><span class="line"><span class="cl"> 		&lt;value&gt;yarn&lt;/value&gt;
+</span></span><span class="line"><span class="cl"> 	&lt;/property&gt;
+</span></span><span class="line"><span class="cl"> 	&lt;property&gt;
+</span></span><span class="line"><span class="cl"> 		&lt;name&gt;mapreduce.jobhistory.address&lt;/name&gt;
+</span></span><span class="line"><span class="cl"> 		&lt;value&gt;master:10020&lt;/value&gt;
+</span></span><span class="line"><span class="cl"> 	&lt;/property&gt;
+</span></span><span class="line"><span class="cl"> 	&lt;property&gt;
+</span></span><span class="line"><span class="cl"> 		&lt;name&gt;mapreduce.jobhistory.webapp.address&lt;/name&gt;
+</span></span><span class="line"><span class="cl"> 		&lt;value&gt;master:19888&lt;/value&gt;
+</span></span><span class="line"><span class="cl"> 	&lt;/property&gt;
+</span></span><span class="line"><span class="cl">&lt;/configuration&gt;
+</span></span></code></pre></td></tr></table>
+</div>
+</div></li>
+<li>
+<p>core-site.xml</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">&lt;configuration&gt;
+</span></span><span class="line"><span class="cl"> 	&lt;property&gt;
+</span></span><span class="line"><span class="cl"> 		&lt;name&gt;fs.defaultFS&lt;/name&gt;
+</span></span><span class="line"><span class="cl"> 		&lt;value&gt;hdfs://192.168.150.81:9000&lt;/value&gt;
+</span></span><span class="line"><span class="cl"> 	&lt;/property&gt;
+</span></span><span class="line"><span class="cl"> 	&lt;property&gt;
+</span></span><span class="line"><span class="cl"> 		&lt;name&gt;io.file.buffer.size&lt;/name&gt;
+</span></span><span class="line"><span class="cl"> 		&lt;value&gt;131072&lt;/value&gt;
+</span></span><span class="line"><span class="cl"> 	&lt;/property&gt;
+</span></span><span class="line"><span class="cl"> 	&lt;property&gt;
+</span></span><span class="line"><span class="cl"> 		&lt;name&gt;hadoop.tmp.dir&lt;/name&gt;
+</span></span><span class="line"><span class="cl"> 		&lt;value&gt;file:/usr/local/src/hadoop/tmp&lt;/value&gt;
+</span></span><span class="line"><span class="cl"> 	&lt;/property&gt;
+</span></span><span class="line"><span class="cl">&lt;/configuration&gt;
+</span></span></code></pre></td></tr></table>
+</div>
+</div></li>
+<li>
+<p>slaves</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">slave1
+</span></span><span class="line"><span class="cl">slave2
+</span></span></code></pre></td></tr></table>
+</div>
+</div></li>
+</ul>
+</li>
+</ol>
+<ul>
+<li>
+<p>​          启动完之后 slave1 slave2 datanode 没开启</p>
+<p>​</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">1.检查JPShadoop是否节点都正常启动
+</span></span><span class="line"><span class="cl">2.删除/usr/loacl/src/hadoop/dfs/data/current/VERSION文件后重启
+</span></span></code></pre></td></tr></table>
+</div>
+</div></li>
+</ul>
+<h1 id="hive">hive</h1>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">出问题打不开关闭安全模式   hdfs dfsadmine -safemode leave
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="zookeeper">zookeeper</h2>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">出问题后
+</span></span><span class="line"><span class="cl">1.确认文件
+</span></span><span class="line"><span class="cl">2.删除/usr/local/src/zookeeper/data/  后 echo (数字) &gt; /usr/local/src/zookeeper/data/myid
+</span></span><span class="line"><span class="cl">  再 source /etc/profile 
+</span></span><span class="line"><span class="cl">3.确认端口是否占用（2181）netstat -apn | grep 2181
+</span></span><span class="line"><span class="cl">  有占用就删除 kill -9 (进程号)
+</span></span></code></pre></td></tr></table>
+</div>
+</div></div>
+
+        <div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>更新于 2022-06-12</span>
+            </div>
+            <div class="post-info-license"></div>
+        </div>
+        <div class="post-info-line">
+            <div class="post-info-md"><span>
+                            <a class="link-to-markdown" href="/second_post/index.md" target="_blank" rel="noopener noreferrer">阅读原始文档</a>
+                        </span></div>
+            <div class="post-info-share">
+                <span><a href="#" onclick="return false;" title="分享到 Twitter" data-sharer="twitter" data-url="http://1139899175.github.io/second_post/" data-title="Second_post" data-via="wu"><i class="fab fa-twitter fa-fw"></i></a><a href="#" onclick="return false;" title="分享到 Facebook" data-sharer="facebook" data-url="http://1139899175.github.io/second_post/"><i class="fab fa-facebook-square fa-fw"></i></a><a href="#" onclick="return false;" title="分享到 WhatsApp" data-sharer="whatsapp" data-url="http://1139899175.github.io/second_post/" data-title="Second_post" data-web><i class="fab fa-whatsapp fa-fw"></i></a><a href="#" onclick="return false;" title="分享到 Line" data-sharer="line" data-url="http://1139899175.github.io/second_post/" data-title="Second_post"><i data-svg-src="/lib/simple-icons/icons/line.min.svg"></i></a><a href="#" onclick="return false;" title="分享到 微博" data-sharer="weibo" data-url="http://1139899175.github.io/second_post/" data-title="Second_post"><i class="fab fa-weibo fa-fw"></i></a><a href="#" onclick="return false;" title="分享到 Myspace" data-sharer="myspace" data-url="http://1139899175.github.io/second_post/" data-title="Second_post" data-description=""><i data-svg-src="/lib/simple-icons/icons/myspace.min.svg"></i></a><a href="#" onclick="return false;" title="分享到 Blogger" data-sharer="blogger" data-url="http://1139899175.github.io/second_post/" data-title="Second_post" data-description=""><i class="fab fa-blogger fa-fw"></i></a><a href="#" onclick="return false;" title="分享到 Evernote" data-sharer="evernote" data-url="http://1139899175.github.io/second_post/" data-title="Second_post"><i class="fab fa-evernote fa-fw"></i></a></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section class="post-tags"></section>
+        <section>
+            <span><a href="javascript:void(0);" onclick="window.history.back();">返回</a></span>&nbsp;|&nbsp;<span><a href="/">主页</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="/first_post/" class="prev" rel="prev" title="First_post"><i class="fas fa-angle-left fa-fw"></i>First_post</a></div>
+</div>
+<div id="comments"></div></article></div>
+        </main><footer class="footer">
+        <div class="footer-container"><div class="footer-line">由 <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.96.0">Hugo</a> 强力驱动 | 主题 - <a href="https://github.com/HEIGE-PCloud/DoIt" target="_blank" rel="noopener noreffer" title="DoIt 0.2.13"><i class="far fa-edit fa-fw"></i> DoIt</a>
+                </div><div class="footer-line"><i class="far fa-copyright fa-fw"></i><span itemprop="copyrightYear">2019 - 2022</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="/" target="_blank" rel="noopener noreferrer">HDK</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
+        </div></footer></div>
+
+    <div id="fixed-buttons"><a href="#back-to-top" id="back-to-top-button" class="fixed-button" title="回到顶部">
+            <i class="fas fa-arrow-up fa-fw"></i>
+        </a><a href="#" id="view-comments" class="fixed-button" title="查看评论">
+            <i class="fas fa-comment fa-fw"></i>
+        </a>
+    </div><div id="cookieconsent-container"></div><div class="assets"><link rel="stylesheet" href="/lib/cookieconsent/cookieconsent.min.css"><script type="text/javascript" src="/lib/autocomplete/autocomplete.min.js"></script><script type="text/javascript" src="/lib/fuse/fuse.min.js"></script><script type="text/javascript" src="/lib/lazysizes/lazysizes.min.js"></script><script type="text/javascript" src="/lib/cookieconsent/cookieconsent.min.js"></script><script type="text/javascript" src="/lib/topbar/topbar.min.js"></script><script type="text/javascript" src="/lib/pjax/pjax.min.js"></script><script type="text/javascript" src="/js/theme.min.js"></script></div>
+
+<div class="pjax-assets"><script type="text/javascript" src="/lib/clipboard/clipboard.min.js"></script><script type="text/javascript" src="/lib/sharer/sharer.min.js"></script><script type="text/javascript" src="/lib/katex/katex.min.js"></script><script type="text/javascript" src="/lib/katex/auto-render.min.js"></script><script type="text/javascript" src="/lib/katex/copy-tex.min.js"></script><script type="text/javascript" src="/lib/katex/mhchem.min.js"></script><script type="text/javascript">window.config={"code":{"copyTitle":"复制到剪贴板","maxShownLines":10},"comment":{},"cookieconsent":{"content":{"dismiss":"同意","link":"了解更多","message":"本网站使用 Cookies 来改善您的浏览体验."},"enable":true,"palette":{"button":{"background":"#f0f0f0"},"popup":{"background":"#1aa3ff"}},"theme":"edgeless"},"math":{"delimiters":[{"display":true,"left":"$$","right":"$$"},{"display":true,"left":"\\[","right":"\\]"},{"display":false,"left":"$","right":"$"},{"display":false,"left":"\\(","right":"\\)"}],"strict":false},"search":{"distance":100,"findAllMatches":false,"fuseIndexURL":"/index.json","highlightTag":"em","ignoreFieldNorm":false,"ignoreLocation":false,"isCaseSensitive":false,"location":0,"maxResultLength":10,"minMatchCharLength":2,"noResultsFound":"没有找到结果","snippetLength":50,"threshold":0.3,"type":"fuse","useExtendedSearch":false},"sharerjs":true};</script><link rel="preload" as="style" onload="this.onload=null;this.rel='stylesheet'" href="/lib/katex/katex.min.css">
+    <noscript><link rel="stylesheet" href="/lib/katex/katex.min.css"></noscript><link rel="preload" as="style" onload="this.onload=null;this.rel='stylesheet'" href="/lib/katex/copy-tex.min.css">
+    <noscript><link rel="stylesheet" href="/lib/katex/copy-tex.min.css"></noscript></div>
+</body>
+
+</html>
